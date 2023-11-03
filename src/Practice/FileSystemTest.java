@@ -83,8 +83,8 @@ interface IFile {
 }
 
 class File implements IFile {
-    String name;
-    long size;
+    private String name;
+    private long size;
 
     public File(String name, long size) {
         this.name = name;
@@ -107,9 +107,7 @@ class File implements IFile {
     }
 
     @Override
-    public void sortBySize() {
-        return;
-    }
+    public void sortBySize() {}
 
     @Override
     public File findLargestFile() {
@@ -118,9 +116,9 @@ class File implements IFile {
 }
 
 class Folder implements IFile {
-    String name;
-    long size;
-    List<IFile> iFiles;
+    private String name;
+    private long size;
+    private List<IFile> iFiles;
 
     public Folder(String name) {
         this.name = name;
@@ -166,7 +164,7 @@ class Folder implements IFile {
 }
 
 class FileSystem {
-    Folder rootDirectory;
+    private Folder rootDirectory;
 
     public FileSystem() {
         rootDirectory = new Folder("root");
@@ -177,7 +175,7 @@ class FileSystem {
     }
 
     public long findLargestFile() {
-        return rootDirectory.findLargestFile().size;
+        return rootDirectory.findLargestFile().getFileSize();
     }
 
     public void sortBySize() {

@@ -26,16 +26,20 @@ public class AuditionTest {
 }
 
 class Canditate {
-    String city;
-    String code;
-    String name;
-    int age;
+    private String city;
+    private String code;
+    private String name;
+    private int age;
 
     public Canditate(String city, String code, String name, int age) {
         this.city = city;
         this.code = code;
         this.name = name;
         this.age = age;
+    }
+
+    public String getCity() {
+        return city;
     }
 
     public String getCode() {
@@ -57,21 +61,21 @@ class Canditate {
 }
 
 class Audition {
-    Set<Canditate> canditateSet;
+    private Set<Canditate> canditateSet;
 
     public Audition() {
         canditateSet = new HashSet<>();
     }
 
     public void addParticpant(String city, String code, String name, int age) {
-        if (canditateSet.stream().filter(canditate -> canditate.city.equals(city)).anyMatch(canditate -> canditate.code.equals(code))) return;
+        if (canditateSet.stream().filter(canditate -> canditate.getCity().equals(city)).anyMatch(canditate -> canditate.getCode().equals(code))) return;
 
         canditateSet.add(new Canditate(city, code, name, age));
     }
 
     public void listByCity(String city) {
         canditateSet.stream()
-                .filter(canditate -> canditate.city.equals(city))
+                .filter(canditate -> canditate.getCity().equals(city))
                 .sorted(Comparator.comparing(Canditate::getName).thenComparing(Canditate::getAge).thenComparing(Canditate::getCode))
                 .forEach(System.out::println);
     }

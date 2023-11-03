@@ -17,8 +17,8 @@ public class Shapes1Test {
 }
 
 class Canvas {
-    String canvasId;
-    int[] canvasSizes;
+    private String canvasId;
+    private int[] canvasSizes;
 
     public Canvas(String canvasId, int[] canvasSizes) {
         this.canvasId = canvasId;
@@ -36,7 +36,7 @@ class Canvas {
 }
 
 class ShapesApplication {
-    List<Canvas> canvases;
+    private List<Canvas> canvases;
 
     public ShapesApplication() {
         canvases = new ArrayList<>();

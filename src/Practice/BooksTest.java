@@ -40,9 +40,9 @@ public class BooksTest {
 }
 
 class Book {
-    String title;
-    String category;
-    float price;
+    private String title;
+    private String category;
+    private float price;
 
     public Book(String title, String category, float price) {
         this.title = title;
@@ -52,6 +52,10 @@ class Book {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public float getPrice() {
@@ -65,7 +69,7 @@ class Book {
 }
 
 class BookCollection {
-    Set<Book> bookSet;
+    private Set<Book> bookSet;
 
     public BookCollection() {
         bookSet = new HashSet<>();
@@ -77,7 +81,7 @@ class BookCollection {
 
     public void printByCategory(String category) {
         bookSet.stream()
-                .filter(book -> book.category.equalsIgnoreCase(category))
+                .filter(book -> book.getCategory().equalsIgnoreCase(category))
                 .sorted(Comparator.comparing(Book::getTitle).thenComparing(Book::getPrice))
                 .forEach(System.out::println);
     }
