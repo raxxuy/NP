@@ -128,6 +128,7 @@ class ResizableArray<T> {
     private T[] array;
     private int length;
 
+    @SuppressWarnings("unchecked")
     public ResizableArray() {
         array = (T[]) new Object[1];
         length = 0;
@@ -138,5 +139,97 @@ class ResizableArray<T> {
         array[length++] = element;
     }
 
+    public boolean removeElement(T element) {
+        boolean removed = false;
 
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != null && array[i].equals(element)) {
+                array[i] = array[--length];
+                removed = true;
+                break;
+            }
+        }
+
+        if (length * 4 <= array.length) array = Arrays.copyOf(array, length * 2 > 0 ? length * 2 : 1);
+        return removed;
+    }
+
+    public boolean contains(T element) {
+        for (T t : array) {
+            if (t != null && t.equals(element)) return true;
+        }
+
+        return false;
+    }
+
+    public Object[] toArray() {
+        return Arrays.copyOf(array, length);
+    }
+
+    public boolean isEmpty() {
+        return length == 0;
+    }
+
+    public int count() {
+        return length;
+    }
+
+    public T elementAt(int idx) {
+        if (idx < 0 && idx > count()) throw new ArrayIndexOutOfBoundsException();
+        return array[idx];
+    }
+
+    static <T> void copyAll(ResizableArray<? super T> dest, ResizableArray<? extends T> src) {
+        for (int i = 0; i < src.count(); i++) {
+            dest.addElement(src.elementAt(i));
+        }
+    }
+}
+
+class IntegerArray extends ResizableArray<Integer> {
+    public double sum() {
+        double sum = 0;
+
+        for (int i = 0; i < count(); i++) {
+            sum += elementAt(i);
+        }
+
+        return sum;
+    }
+
+    public double mean() {
+        double sum = 0;
+
+        for (int i = 0; i < count(); i++) {
+            sum += elementAt(i);
+        }
+
+        return sum / count();
+    }
+
+    public int countNonZero() {
+        return (int) Arrays.stream(toArray()).filter(i -> !i.equals(0)).count();
+    }
+
+    public IntegerArray distinct() {
+        IntegerArray integerArray = new IntegerArray();
+
+        for (int i = 0; i < count(); i++) {
+            if (!integerArray.contains(elementAt(i))) {
+                integerArray.addElement(elementAt(i));
+            }
+        }
+
+        return integerArray;
+    }
+
+    public IntegerArray increment(int offset) {
+        IntegerArray integerArray = new IntegerArray();
+
+        for (int i = 0; i < count(); i++) {
+            integerArray.addElement(elementAt(i) + offset);
+        }
+
+        return integerArray;
+    }
 }
